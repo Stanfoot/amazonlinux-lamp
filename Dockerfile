@@ -11,7 +11,7 @@ RUN yum -y update \
     && yum install -y httpd24 mod24_ssl libxml2 libxml2-devel libcurl-devel libjpeg-turbo-devel libpng-devel libmcrypt-devel readline-devel libtidy-devel libxslt-devel git zip unzip openssl-devel curl-devel wget gcc \
     && yum -y --disablerepo=amzn-main --enablerepo=epel install libwebp \
     && yum install -y --enablerepo=epel,remi,remi-php72 php72 php72-php-mbstring php72-php-pdo-dblib php72-php-opcache php72-php-mysqlnd php72-php-pecl-mcrypt php72-php-devel php72-php-gd php72-php-xml \
-    && curl -s http://getcomposer.org/installer | php \
+    && curl -s http://getcomposer.org/installer | php72 \
     && mv composer.phar /usr/local/bin/composer \
     && ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && chkconfig httpd on \
