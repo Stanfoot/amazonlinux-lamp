@@ -1,7 +1,5 @@
-# Amazon Linux PHP5.6.x Laravel
+# Amazon Linux x LAMP
 
 ## Installing
-- PHP5.6.x
-- MySQL5.6.x
+- PHP7.2.x
 - composer
-
