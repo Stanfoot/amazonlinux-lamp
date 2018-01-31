@@ -16,10 +16,10 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: make docker-build
+          command: docker build -t  ${OWNER}/${IMAGE_NAME}:latest .
       - run:
           name: Save image
-          command: make docker-save
+          command: docker image save ${OWNER}/${IMAGE_NAME}:latest > ./${OWNER}-${IMAGE_NAME}
       - persist_to_workspace:
           root: .
           paths:
@@ -34,16 +34,16 @@ jobs:
           at: .
       - run:
           name: Load image from tar
-          command: make docker-load
+          command: docker load -i ./${OWNER}-${IMAGE_NAME}
       - run:
           name: Tag to latest
-          command: make docker-tag tag=$CIRCLE_TAG
+          command: docker tag ${OWNER}/${IMAGE_NAME}:latest ${OWNER}/${IMAGE_NAME}:$CIRCLE_TAG
       - run:
           name: Docker Login
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
       - run:
           name: Push image to registory
-          command: make docker-push
+          command: docker push ${OWNER}/${IMAGE_NAME}
 workflows:
   version: 2
   build:
