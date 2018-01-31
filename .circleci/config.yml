@@ -19,11 +19,11 @@ jobs:
           command: docker build -t  ${OWNER}/${IMAGE_NAME}:latest .
       - run:
           name: Save image
-          command: docker image save ${OWNER}/${IMAGE_NAME}:latest > ./${OWNER}-${IMAGE_NAME}
+          command: docker image save ${OWNER}/${IMAGE_NAME}:latest > ./${OWNER}-${IMAGE_NAME}.tar
       - persist_to_workspace:
           root: .
           paths:
-            - ./docker-image.tar
+            - ./${OWNER}-${IMAGE_NAME}.tar
   push:
     <<: *default_env
     steps:
@@ -32,7 +32,7 @@ jobs:
           at: .
       - run:
           name: Load image from tar
-          command: docker load -i ./${OWNER}-${IMAGE_NAME}
+          command: docker load -i ./${OWNER}-${IMAGE_NAME}.tar
       - run:
           name: Tag to latest
           command: docker tag ${OWNER}/${IMAGE_NAME}:latest ${OWNER}/${IMAGE_NAME}:$CIRCLE_TAG
